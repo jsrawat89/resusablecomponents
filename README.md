@@ -1,2 +1,2 @@
 # resusablecomponents
-open repository for reusable components we built
+This is the repository for maintaining all the custom code we built for reuse it.
