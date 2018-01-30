@@ -1,0 +1,3 @@
+<design:component >
+	<design:attribute name="recordtypeId" label="Record Type Id" description="record type id of the Event for which it's showing the events list" />
+</design:component>

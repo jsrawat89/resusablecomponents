@@ -1,0 +1,113 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="OpportunityCustomComponentController">
+    <aura:attribute name="OppWrapper"
+                    type="OpportunityCustomComponentController.OpportunityWrapper"
+                    description="Wrapper class for opportunity"/>
+    <aura:attribute name="hideeditsection"
+                    type="String"
+                    description="hide the edit section" default="slds-hide"/>
+    
+    
+     <aura:attribute name="hideviewsection"
+                    type="String"
+                    description="hide the edit section" default="slds-show"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+
+    <div class="{! 'slds-form slds-form_stacked ' + v.hideviewsection}">
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="input-id-01">Stage</label>
+            <div class="slds-form-element__control">
+                <span>{!v.OppWrapper.oppObj.StageName}</span>
+            </div>
+        </div>
+        <!--<aura:if isTrue="{!v.OppWrapper.oppObj.StageName == 'Closed Lost'}">-->
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="input-id-01">Reason for Loss</label>
+                <div class="slds-form-element__control">
+                    <span>{!v.OppWrapper.oppObj.Loss_Reason__c}</span>
+                </div>
+            </div>
+        
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="input-id-02">Competitor Loss to</label>
+                <div class="slds-form-element__control">
+                    <span>{!v.OppWrapper.oppObj.Competitor_loss_to__c }</span>
+                </div>
+            </div>
+        <!--</aura:if>-->
+        <!--<aura:if isTrue="{!v.OppWrapper.oppObj.StageName == 'Closed Won'}">-->
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="input-id-02">Reason for win</label>
+                <div class="slds-form-element__control">
+                    <span>{!v.OppWrapper.oppObj.Won_Reason__c }</span>
+                </div>
+            </div>
+        <!--</aura:if>-->
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="input-id-02">Win/Loss reason description</label>
+            <div class="slds-form-element__control">
+                <span>{!v.OppWrapper.oppObj.Win_Loss_Reason_Description__c}</span>
+            </div>
+        </div>
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="input-id-02">Close Date</label>
+            <div class="slds-form-element__control">
+                <ui:outputDate aura:id="oDate" value="{!v.OppWrapper.oppObj.CloseDate}" />
+            </div>
+        </div>
+
+        <div class="slds-text-align_center">            
+            <button class="slds-button slds-button_brand" onclick="{!c.showEdit}">Edit</button>
+        </div>
+    </div>
+    
+    <!-- Edit Section start-->
+    <div class="{! 'slds-form slds-form_stacked ' + v.hideeditsection}">
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="input-id-01">Stage</label>
+            <div class="slds-form-element__control">
+                <ui:inputSelect aura:id="stagename" multiple="false" change="{!c.stageChange}" value="{!v.OppWrapper.oppObj.StageName}" />         
+            </div>
+        </div>
+       <!-- <aura:if isTrue="{!v.OppWrapper.oppObj.StageName == 'Closed Lost'}">-->
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="input-id-01">Reason for Loss</label>
+                <div class="slds-form-element__control">
+                    <ui:inputSelect aura:id="lostreason" multiple="false" value="{!v.OppWrapper.oppObj.Loss_Reason__c}" />         
+                </div>
+            </div>
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="input-id-02">Competitor Loss to</label>
+                <div class="slds-form-element__control">
+                    <ui:inputSelect aura:id="comploss" multiple="false" value="{!v.OppWrapper.oppObj.Competitor_loss_to__c }" />         
+                </div>
+            </div>
+        <!--</aura:if>-->
+        <!--<aura:if isTrue="{!v.OppWrapper.oppObj.StageName == 'Closed Won'}">-->
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" for="input-id-02">Reason for win</label>
+                <div class="slds-form-element__control">
+                    <ui:inputSelect aura:id="winreason" multiple="false" value="{!v.OppWrapper.oppObj.Won_Reason__c }" />         
+                </div>
+            </div>
+       <!-- </aura:if>-->
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="input-id-02">Win/Loss reason description</label>
+            <div class="slds-form-element__control">
+                <ui:inputTextArea value="{!v.OppWrapper.oppObj.Win_Loss_Reason_Description__c}" />
+            </div>
+        </div>
+        <div class="slds-form-element">
+            <label class="slds-form-element__label" for="input-id-02">Close Date</label>
+            <div class="slds-form-element__control">
+                <ui:inputDate aura:id="closedate" required="true"  value="{!v.OppWrapper.oppObj.CloseDate}" displayDatePicker="true"/>
+            </div>
+        </div>
+        <div class="slds-text-align_center" style="padding-top:10px">
+            <button class="slds-button slds-button_neutral" onclick="{!c.cancelEdit}">Cancel</button>
+            <button class="slds-button slds-button_brand" onclick="{!c.saveRecord}">Save</button>
+        </div>
+    </div>
+    <!-- Edit Section end -->
+</aura:component>
